@@ -34,70 +34,38 @@
                 </span>
             </div>
             <div class="buttonContainer">
-                <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Ingredients
-                    </button>
-                    <ul class="dropdown-menu multi-column columns-3">
+                <div class="btn-dropdown">
+                    <button class="button btn-ingredient" id="btn-ingredient">Ingredients <img class="arrow" src="./img/arrow.svg" alt=""></button>
+                    <div class="dropdown-list ingredient-dropdown" id="ingredient-list">
                         <div class="row">
-                            <div class="col-sm-4">
-                                <ul class="multi-column-dropdown">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">One more separated link</a></li>
-                                </ul>
-                            </div>
-                            <div class="col-sm-4">
-                                <ul class="multi-column-dropdown">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">One more separated link</a></li>
-                                </ul>
-                            </div>
-                            <div class="col-sm-4">
-                                <ul class="multi-column-dropdown">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">One more separated link</a></li>
-                                </ul>
-                            </div>
+                            <div class="col-11"><input  class="dropdown-list-input form-control " type="text" placeholder="Rechercher un ingrédient"></div>
+                            <div class="col-1"><img class="arrow rotate" id="ingredient-list-hide" src="./img/arrow.svg" alt=""></div>
                         </div>
-                    </ul>
+                        <div class="row dropdown-list-detail" id="ingredient-choice">
+                        </div>
+                    </div>
                 </div>
-                <div class="dropdown">
-                    <button class="btn btn-device dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Ingredients
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
+                <div class="button-dropdown">
+                    <button class="button btn-device" id="btn-appliance">Appareils <img class="arrow" src="./img/arrow.svg" alt=""></button>
+                    <div class="dropdown-list appliance-dropdown" id="appliance-list">
+                        <div class="row">
+                            <div class="col-11"><input  class="dropdown-list-input form-control " type="text" placeholder="Rechercher un ingrédient"></div>
+                            <div class="col-1"><img class="arrow rotate" id="appliance-list-hide" src="./img/arrow.svg" alt=""></div>
+                        </div>
+                        <div class="row dropdown-list-detail" id="appliance-choice">
+                        </div>
+                    </div>
                 </div>
-                <div class="dropdown">
-                    <button class="btn btn-ustensil dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Ingredients
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
+                <div class="button-dropdown">
+                    <button class="button btn-ustensil" id="btn-ustensil">Ustensiles <img class="arrow" src="./img/arrow.svg" alt=""></button>
+                    <div class="dropdown-list ustensil-dropdown" id="ustensil-list">
+                        <div class="row">
+                            <div class="col-11"><input  class="dropdown-list-input form-control " type="text" placeholder="Rechercher un ingrédient"></div>
+                            <div class="col-1"><img class="arrow rotate" id="ustensil-list-hide" src="./img/arrow.svg" alt=""></div>
+                        </div>
+                        <div class="row dropdown-list-detail" id="ustensil-choice">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -129,7 +97,7 @@
             </div>
         </div>
     </main>
-<script src="./"></script>
+<script type="module" src="./js/utils/menu.js"></script>
 </body>
 
 </html>
