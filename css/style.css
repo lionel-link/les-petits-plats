@@ -1,5 +1,5 @@
 body {
-    max-width: 1400px;
+    max-width: 1440px;
     font-family: Lato;
     font-size: 18px;
 }
@@ -136,17 +136,32 @@ i.fa.fa-search {
     color: black;
 }
 
+
+
+
+div#card-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
 .card {
     width: 380px;
-    height: 178px;
+    margin: 15px;
 }
 
 .card-recette {
+    max-width: 171px;
+    height: 91px;
     font-size: 12px;
     display: flex;
     flex-direction: column;
     font-weight: 700;
-    line-height: 14.4px
+    line-height: 14.4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .card-left,
@@ -181,7 +196,13 @@ i.fa.fa-search {
 }
 
 .card-description {
+    max-width: 171px;
+    height: 91px;
     font-family: Roboto;
     font-size: 12px;
     font-weight: 400;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }

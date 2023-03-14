@@ -21,12 +21,11 @@
 <body>
     <header>
         <div class="container">
-
             <div class="logoContainer">
                 <img class="logo" src="img/logo.png" alt="Logo">
             </div>
             <div class="input-group">
-                <input class="form-control search-input" type="text" value="search" id="example-search-input">
+                <input class="form-control search-input" type="text" placeholder="Rechercher" id="main-search-input">
                 <span class="input-group-append">
                     <button class="btn btn-outline-secondary btn-icon" type="button">
                         <i class="fa fa-search"></i>
@@ -71,33 +70,12 @@
         </div>
     </header>
     <main>
-        <div class="container">
-            <div class="card">
-                <canvas width="380" height="178"
-                    style="width: 380px; height: 178; background-color: lightgray;"></canvas>
-                <div class="card-text">
-                    <div class="card-left">
-                        <div class="card-title">Limonade de Coco</div>
-                        <div class="card-recette">
-                            <span><strong>Lait de coco:</strong> 400ml</span>
-                            <span><strong>Jus de citron:</strong> 2</span>
-                            <span><strong>Créme de coco:</strong> 4</span>
-                            <span><strong>cuillères Sucre:</strong> 20g</span>
-                            <span><strong>Glaçons:</strong> 2</span>
-                        </div>
-                    </div>
-                    <div class="card-right">
-                        <div class="card-duration"><i class="fa-regular fa-clock"></i> 10 min</div>
-                        <div class="card-description">Mettre les glaçons à votre goût dans le blender, ajouter le lait,
-                            la crème
-                            de coco, le jus de 2 citrons et le sucre. Mixer jusqu'à avoir la consistence désirée.
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="container" id="card-container">
         </div>
     </main>
 <script type="module" src="./js/utils/menu.js"></script>
+<script type="module" src="./js/search.js"></script>
+<script type="module" src="./js/page/index.js"></script>
 </body>
 
 </html>

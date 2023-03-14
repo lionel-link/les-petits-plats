@@ -1776,7 +1776,10 @@ const recipes = [
   },
 ];
 
-export function getRecipes() {}
+export function getRecipes() {
+    return recipes;
+}
+
 export function getIngredients() {
   let ingredientList = [];
   recipes.forEach((recipe) => {
@@ -1788,6 +1791,7 @@ export function getIngredients() {
   });
   return ingredientList;
 }
+
 export function getAppliances() {
   let applianceList = [];
   recipes.forEach((recipe) => {
@@ -1797,6 +1801,7 @@ export function getAppliances() {
   });
   return applianceList;
 }
+
 export function getUstensils() {
     let ustensilList = [];
     recipes.forEach((recipe) => {

@@ -114,7 +114,6 @@ function applianceList() {
 
 function ustensilList() {
   const ustensilList = getUstensils()
-  console.log(ustensilList)
   let compteur = 0;
   for (let j = 0; j < 3; j = j + 1) {
     let div = document.createElement("div");
