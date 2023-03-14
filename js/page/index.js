@@ -1,4 +1,4 @@
-import { getAppliances, getIngredients, getRecipes, getUstensils } from "../../data/recipesData.js";
+import { getAppliances, getIngredients, getRecipes } from "../../data/recipesData.js";
 import { recipesFactory } from "../factories/recipesFactories.js";
 
 const cardContainer = document.getElementById("card-container");
@@ -7,7 +7,7 @@ const searchBar = document.getElementById("main-search-input");
 const recipes = getRecipes();
 const ingredients = getIngredients();
 const appliances = getAppliances();
-const ustensils = getUstensils();
+const ustensils = getU();
 
 function buidRecipesDom(recipesDom) {
   if (recipesDom) {
