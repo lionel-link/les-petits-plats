@@ -51,9 +51,10 @@ button.btn:hover {
     color: white;
 }
 
-.buttonContainer {
+.button-container {
     display: flex;
     flex-direction: row;
+    height: 77px;
 }
 
 .arrow {
@@ -65,7 +66,7 @@ button.btn:hover {
     transform: rotate(180deg);
 }
 
-.buttonContainer .btn {
+.button-container .btn {
     margin: 20px 10px 20px 0;
 }
 
@@ -80,6 +81,26 @@ button.btn:hover {
     margin: 15px 15px 15px 0;
     font-weight: 300;
     line-height: 22px;
+}
+
+div#appliance-choice, div#ingredient-choice, div#ustensil-choice{
+    position: absolute;
+    height: auto;
+    width: 667px;
+    z-index: 10000;
+    padding-bottom: 17px;
+    left: 12px;
+    border-radius: 5px;
+}
+
+div#appliance-choice {
+    background-color: #68D9A4;
+}
+div#ingredient-choice {
+    background-color: #3282F7;
+}
+div#ustensil-choice {
+    background-color: #ED6454;
 }
 
 .ingredient-dropdown {
@@ -139,7 +160,7 @@ i.fa.fa-search {
 
 
 
-div#card-container {
+.card-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -152,15 +173,12 @@ div#card-container {
 
 .card-recette {
     max-width: 171px;
-    height: 91px;
+    height: 73px;
     font-size: 12px;
     display: flex;
     flex-direction: column;
     font-weight: 700;
     line-height: 14.4px;
-    display: -webkit-box;
-    -webkit-line-clamp: 5;
-    -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
