@@ -39,43 +39,54 @@ function filter(research) {
   if (searchBar.value.length >= 3) {
     let length = searchBar.value.length;
 
-    for (let i = 0; i < recipes.length; i++) {
-        
-      let SlitedTitle = recipes[i].name.split(" ");
-      for (let j = 0; j < SlitedTitle.length; j++) {
-        if (SlitedTitle[j].substring(0, length).toUpperCase() === searchBar.value.toUpperCase()) {
-          for (let k = -1; k < recipesList.length; k++) {
-            if (recipesList[k] ? !recipesList[k] === recipes[i] : true) {
-              recipesList.push(recipes[i]);
-            }
-          }
-        }
-      }
-
-      let SlitedDescription = recipes[i].description.split(" ");
-      for (let j = 0; j < SlitedDescription.length; j++) {
-        if (SlitedDescription[j].substring(0, length).toUpperCase() === searchBar.value.toUpperCase()) {
-          for (let k = -1; k < recipesList.length; k++) {
-            if (recipesList[k] ? !recipesList[k] === recipes[i] : true) {
-              recipesList.push(recipes[i]);
-            }
-          }
-        }
-      }
-
-      for (let m = 0; m < recipes[i].ingredients.length; m++) {
-        let Slitedingredient = recipes[i].ingredients[m].ingredient.split(" ");
-        for (let j = 0; j < Slitedingredient.length; j++) {
-          if (Slitedingredient[j].substring(0, length).toUpperCase() === searchBar.value.toUpperCase()) {
-            for (let k = -1; k < recipesList.length; k++) {
-              if (recipesList[k] ? !recipesList[k] === recipes[i] : true) {
-                recipesList.push(recipes[i]);
+    recipes.forEach((recipe) => {
+      let SlitedTitle = recipe.name.split(" ");
+      SlitedTitle.forEach((word) => {
+        if (word.substring(0, length).toUpperCase() === searchBar.value.toUpperCase()) {
+          if (recipesList.length === 0) {
+            recipesList.push(recipe);
+          } else {
+            recipesList.forEach((recip) => {
+              if (!(recip === recipe)) {
+                recipesList.push(recipe);
               }
-            }
+            });
           }
         }
-      }
-    }
+      });
+
+      let SlitedDescription = recipe.name.split(" ");
+      SlitedDescription.forEach((word) => {
+        if (word.substring(0, length).toUpperCase() === searchBar.value.toUpperCase()) {
+          if (recipesList.length === 0) {
+            recipesList.push(recipe);
+          } else {
+            recipesList.forEach((recip) => {
+              if (!(recip === recipe)) {
+                recipesList.push(recipe);
+              }
+            });
+          }
+        }
+      });
+
+      recipe.ingredients.forEach((ingredient) => {
+        let SlitedIngredient = ingredient.ingredient.split(" ");
+        SlitedIngredient.forEach((word) => {
+          if (word.substring(0, length).toUpperCase() === searchBar.value.toUpperCase()) {
+            if (recipesList.length === 0) {
+              recipesList.push(recipe);
+            } else {
+              recipesList.forEach((recip) => {
+                if (!(recip === recipe)) {
+                  recipesList.push(recipe);
+                }
+              });
+            }
+          }
+        });
+      });
+    });
     refresh = true;
     buidRecipesDom(recipesList);
     return;

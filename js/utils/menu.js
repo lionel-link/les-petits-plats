@@ -16,6 +16,8 @@ const ingredientChoice = document.getElementById("ingredient-choice");
 const applianceChoice = document.getElementById("appliance-choice");
 const ustensilChoice = document.getElementById("ustensil-choice");
 
+const btnContainer = document.querySelector(".button-container");
+
 btnIngredient.addEventListener("click", hide);
 ListIngredientHide.addEventListener("click", hideList);
 
@@ -33,6 +35,15 @@ function hideList() {
 
 btnAppliance.addEventListener("click", hideAppliance);
 ListApplianceHide.addEventListener("click", hideListAppliance);
+document.addEventListener("click", hideListMenu);
+
+function hideListMenu(e) {
+  if (ListIngredient.style.display === "block") {
+    document.addEventListener("click", (e)=>{
+      btnContainer.contains(e.target) ? '' : closAllLists();
+    });
+  }
+}
 
 function hideAppliance() {
   btnAppliance.classList.add("d-none");
@@ -80,7 +91,6 @@ function ingredientList() {
     div.appendChild(ul);
     for (let i = 0; i < 42; i = i + 1) {
       if (compteur < ingredientList.length) {
-        
         let li = document.createElement("li");
         li.innerText = ingredientList[0];
         ul.appendChild(li);
@@ -92,7 +102,7 @@ function ingredientList() {
 }
 
 function applianceList() {
-  const applianceList = getAppliances()
+  const applianceList = getAppliances();
   let compteur = 0;
   for (let j = 0; j < 3; j = j + 1) {
     let div = document.createElement("div");
@@ -101,7 +111,6 @@ function applianceList() {
     div.appendChild(ul);
     for (let i = 0; i < 4; i = i + 1) {
       if (compteur < applianceList.length) {
-        
         let li = document.createElement("li");
         li.innerText = applianceList[0];
         ul.appendChild(li);
@@ -113,7 +122,7 @@ function applianceList() {
 }
 
 function ustensilList() {
-  const ustensilList = getUstensils()
+  const ustensilList = getUstensils();
   let compteur = 0;
   for (let j = 0; j < 3; j = j + 1) {
     let div = document.createElement("div");
@@ -122,7 +131,6 @@ function ustensilList() {
     div.appendChild(ul);
     for (let i = 0; i < 10; i = i + 1) {
       if (compteur < ustensilList.length) {
-        
         let li = document.createElement("li");
         li.innerText = ustensilList[0];
         ul.appendChild(li);
@@ -133,6 +141,12 @@ function ustensilList() {
   }
 }
 
+function closAllLists() {
+  hideList();
+  hideListAppliance();
+  hideListUstensil();
+}
+
 ingredientList();
-ustensilList()
-applianceList()
+ustensilList();
+applianceList();
