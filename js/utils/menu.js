@@ -1,4 +1,6 @@
 import { getIngredients, getAppliances, getUstensils } from "../../data/recipesData.js";
+import { buttonFactory } from "../../js/factories/buttonFactories.js";
+import { menuFilter } from "../../js/page/index.js";
 
 const btnIngredient = document.getElementById("btn-ingredient");
 const ListIngredient = document.getElementById("ingredient-list");
@@ -18,8 +20,11 @@ const ustensilChoice = document.getElementById("ustensil-choice");
 
 const btnContainer = document.querySelector(".button-container");
 
+const selectedItem = document.querySelector(".selected-item");
+
 btnIngredient.addEventListener("click", hide);
 ListIngredientHide.addEventListener("click", hideList);
+let ItemsSelected = []
 
 function hide() {
   btnIngredient.classList.add("d-none");
@@ -37,10 +42,10 @@ btnAppliance.addEventListener("click", hideAppliance);
 ListApplianceHide.addEventListener("click", hideListAppliance);
 document.addEventListener("click", hideListMenu);
 
-function hideListMenu(e) {
-  if (ListIngredient.style.display === "block") {
+function hideListMenu() {
+  if (ListIngredient.style.display === "block" || ListAppliance.style.display === "block" || ListUstensil.style.display === "block") {
     document.addEventListener("click", (e)=>{
-      btnContainer.contains(e.target) ? '' : closAllLists();
+      btnContainer.contains(e.target) ? "" : closeAllLists();
     });
   }
 }
@@ -59,6 +64,10 @@ function hideListAppliance() {
 
 btnUstensil.addEventListener("click", hideUstensil);
 ListUstensilHide.addEventListener("click", hideListUstensil);
+
+ListAppliance.addEventListener("click", (e)=>{showItemdMenu(e)});
+ListIngredient.addEventListener("click", (e)=>{showItemdMenu(e)});
+ListUstensil.addEventListener("click", (e)=>{showItemdMenu(e)});
 
 function hideUstensil() {
   btnUstensil.classList.add("d-none");
@@ -141,10 +150,38 @@ function ustensilList() {
   }
 }
 
-function closAllLists() {
+function closeAllLists() {
   hideList();
   hideListAppliance();
   hideListUstensil();
+}
+
+function showItemdMenu (item) {
+ 
+  let findItem = true
+  if(item.target.nodeName === 'LI') {
+
+    let type = item.target.parentElement.parentElement.parentElement.getAttribute("id")
+    let content = item.target.innerText
+
+    if (ItemsSelected.length === 0){
+
+      ItemsSelected.push({content,type});
+      selectedItem.appendChild(buttonFactory(content, type));
+      menuFilter(ItemsSelected)
+    }else {
+      ItemsSelected.forEach(ItemSelected => {
+        if(ItemSelected.content === content){
+          findItem = false;
+        }
+      })
+      if(findItem){
+        ItemsSelected.push({content,type});
+        selectedItem.appendChild(buttonFactory(content, type));
+        menuFilter(ItemsSelected)
+      }
+    }
+  }
 }
 
 ingredientList();

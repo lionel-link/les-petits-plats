@@ -43,7 +43,7 @@ export function recipesFactory(recipe) {
   div3.classList.add("card-recette");
   let div4 = document.createElement("div");
   div4.classList.add("card-title");
-  div4.innerHTML = recipe.name;
+  div4.innerHTML = recipe.name+'/'+recipe.appliance;
   div2.appendChild(div4);
   div2.appendChild(div3)
 
@@ -52,8 +52,11 @@ export function recipesFactory(recipe) {
   recipe.ingredients.forEach((ingredient) => {
     let span = document.createElement('span')
     span.innerHTML = ` <strong>${ingredient.ingredient}:</strong>  ${ingredient.quantity} ${ingredient.unit ? ingredient.unit : ''}`
-    
+    /** afficher liste ustensil */ 
     div5.appendChild(span)
+    let div115 = document.createElement("div");
+    div115.innerHTML = recipe.ustensils
+    div5.appendChild(div115)
   });
   div3.appendChild(div5);
 

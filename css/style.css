@@ -30,6 +30,7 @@ body {
     border: none;
     border-radius: 5px;
     margin: 15px 15px 15px 0;
+    width: 170px;
 }
 
 button.btn:hover {
