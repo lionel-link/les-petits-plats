@@ -109,8 +109,9 @@ export function menuFilter(selectedItems) {
       let findRecipe = false;
 
       if (type === "appliance") {
+        //debugger
         if (recipe[type].toLowerCase().includes(content)) {
-          if (selectedItems.length > 1  && recipe[type].toLowerCase() === content && selectedItems[selectedItems.length - 1].type === "appliance") {
+          if (selectedItems.length > 1  && recipe[type].toLowerCase() === content && selectedItems[selectedItems.length - 1].type === "appliance-choice") {
             recipesListFilter.push(recipe);
           } else {
             if (recipesList.length === 0) {
@@ -128,7 +129,7 @@ export function menuFilter(selectedItems) {
         recipe.ingredients.forEach((ingredient) => {
           if (ingredient.ingredient.toLowerCase().includes(content)) {
             console.log(selectedItems.length > 1 && ingredient.ingredient.toLowerCase() === content && selectedItems[selectedItems.length - 1].type === "ingredient");
-            if (selectedItems.length > 1 && ingredient.ingredient.toLowerCase() === content && selectedItems[selectedItems.length - 1].type === "ingredient") {
+            if (selectedItems.length > 1 && ingredient.ingredient.toLowerCase() === content && selectedItems[selectedItems.length - 1].type === "ingredient-choice") {
               //debugger
               recipesListFilter.push(recipe);
             } else {
@@ -146,7 +147,7 @@ export function menuFilter(selectedItems) {
       } else {
         recipe.ustensils.forEach((ustensil) => {
           if (ustensil.toLowerCase().includes(content)) {
-            if (selectedItems.length > 1 && ustensil.toLowerCase() === content && selectedItems[selectedItems.length - 1].type === "ustensil") {
+            if (selectedItems.length > 1 && ustensil.toLowerCase() === content && selectedItems[selectedItems.length - 1].type === "ustensil-choice") {
               recipesListFilter.push(recipe);
             } else {
               if (recipesList.length === 0) {
