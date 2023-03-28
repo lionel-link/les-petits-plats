@@ -92,6 +92,7 @@ function close(e) {
 
 function ingredientList() {
   const ingredientList = getIngredients();
+  ingredientList.sort();
   let compteur = 0;
   for (let j = 0; j < 3; j = j + 1) {
     let div = document.createElement("div");
@@ -112,6 +113,7 @@ function ingredientList() {
 
 function applianceList() {
   const applianceList = getAppliances();
+  applianceList.sort();
   let compteur = 0;
   for (let j = 0; j < 3; j = j + 1) {
     let div = document.createElement("div");
@@ -132,6 +134,7 @@ function applianceList() {
 
 function ustensilList() {
   const ustensilList = getUstensils();
+  ustensilList.sort();
   let compteur = 0;
   for (let j = 0; j < 3; j = j + 1) {
     let div = document.createElement("div");
