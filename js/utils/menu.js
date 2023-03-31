@@ -1,6 +1,7 @@
 import { getIngredients, getAppliances, getUstensils } from "../../data/recipesData.js";
 import { buttonFactory } from "../../js/factories/buttonFactories.js";
-import { menuFilter } from "../../js/page/index.js";
+import { menuList } from "../../js/factories/menuListFactories.js";
+import { menuFilter, buildRecipesDom } from "../../js/page/index.js";
 
 const btnIngredient = document.getElementById("btn-ingredient");
 const ListIngredient = document.getElementById("ingredient-list");
@@ -24,7 +25,7 @@ const selectedItem = document.querySelector(".selected-item");
 
 btnIngredient.addEventListener("click", hide);
 ListIngredientHide.addEventListener("click", hideList);
-let ItemsSelected = []
+let ItemsSelected = [];
 
 function hide() {
   btnIngredient.classList.add("d-none");
@@ -44,7 +45,7 @@ document.addEventListener("click", hideListMenu);
 
 function hideListMenu() {
   if (ListIngredient.style.display === "block" || ListAppliance.style.display === "block" || ListUstensil.style.display === "block") {
-    document.addEventListener("click", (e)=>{
+    document.addEventListener("click", (e) => {
       btnContainer.contains(e.target) ? "" : closeAllLists();
     });
   }
@@ -65,9 +66,15 @@ function hideListAppliance() {
 btnUstensil.addEventListener("click", hideUstensil);
 ListUstensilHide.addEventListener("click", hideListUstensil);
 
-ListAppliance.addEventListener("click", (e)=>{showItemdMenu(e)});
-ListIngredient.addEventListener("click", (e)=>{showItemdMenu(e)});
-ListUstensil.addEventListener("click", (e)=>{showItemdMenu(e)});
+ListAppliance.addEventListener("click", (e) => {
+  showItemdMenu(e);
+});
+ListIngredient.addEventListener("click", (e) => {
+  showItemdMenu(e);
+});
+ListUstensil.addEventListener("click", (e) => {
+  showItemdMenu(e);
+});
 
 function hideUstensil() {
   btnUstensil.classList.add("d-none");
@@ -91,66 +98,24 @@ function close(e) {
 }
 
 function ingredientList() {
-  const ingredientList = getIngredients();
-  ingredientList.sort();
-  let compteur = 0;
-  for (let j = 0; j < 3; j = j + 1) {
-    let div = document.createElement("div");
-    div.classList.add("col-4");
-    let ul = document.createElement("ul");
-    div.appendChild(ul);
-    for (let i = 0; i < 42; i = i + 1) {
-      if (compteur < ingredientList.length) {
-        let li = document.createElement("li");
-        li.innerText = ingredientList[0];
-        ul.appendChild(li);
-        ingredientList.splice(0, 1);
-      }
-    }
-    ingredientChoice.appendChild(div);
-  }
+  let listsElement = menuList("ingredient");
+  listsElement.forEach((listElement)=>{
+    ingredientChoice.appendChild(listElement);
+  })
 }
 
 function applianceList() {
-  const applianceList = getAppliances();
-  applianceList.sort();
-  let compteur = 0;
-  for (let j = 0; j < 3; j = j + 1) {
-    let div = document.createElement("div");
-    div.classList.add("col-4");
-    let ul = document.createElement("ul");
-    div.appendChild(ul);
-    for (let i = 0; i < 4; i = i + 1) {
-      if (compteur < applianceList.length) {
-        let li = document.createElement("li");
-        li.innerText = applianceList[0];
-        ul.appendChild(li);
-        applianceList.splice(0, 1);
-      }
-    }
-    applianceChoice.appendChild(div);
-  }
+  let listsElement = menuList("appliance");
+  listsElement.forEach((listElement)=>{
+    applianceChoice.appendChild(listElement);
+  })
 }
 
 function ustensilList() {
-  const ustensilList = getUstensils();
-  ustensilList.sort();
-  let compteur = 0;
-  for (let j = 0; j < 3; j = j + 1) {
-    let div = document.createElement("div");
-    div.classList.add("col-4");
-    let ul = document.createElement("ul");
-    div.appendChild(ul);
-    for (let i = 0; i < 10; i = i + 1) {
-      if (compteur < ustensilList.length) {
-        let li = document.createElement("li");
-        li.innerText = ustensilList[0];
-        ul.appendChild(li);
-        ustensilList.splice(0, 1);
-      }
-    }
-    ustensilChoice.appendChild(div);
-  }
+  let listsElement = menuList("ustensil");
+  listsElement.forEach((listElement)=>{
+    ustensilChoice.appendChild(listElement);
+  })
 }
 
 function closeAllLists() {
@@ -159,32 +124,45 @@ function closeAllLists() {
   hideListUstensil();
 }
 
-function showItemdMenu (item) {
- 
-  let findItem = true
-  if(item.target.nodeName === 'LI') {
+function showItemdMenu(item) {
+  let findItem = true;
+  if (item.target.nodeName === "A") {
+    let type = item.target.parentElement.parentElement.parentElement.parentElement.getAttribute("id");
+    type = type.split("-");
+    type = type[0];
+    let content = item.target.innerText;
 
-    let type = item.target.parentElement.parentElement.parentElement.getAttribute("id")
-    let content = item.target.innerText
-
-    if (ItemsSelected.length === 0){
-
-      ItemsSelected.push({content,type});
+    if (ItemsSelected.length === 0) {
+      ItemsSelected.push({ content, type });
       selectedItem.appendChild(buttonFactory(content, type));
-      menuFilter(ItemsSelected)
-    }else {
-      ItemsSelected.forEach(ItemSelected => {
-        if(ItemSelected.content === content){
+      buildRecipesDom(menuFilter(ItemsSelected));
+    } else {
+      ItemsSelected.forEach((ItemSelected) => {
+        if (ItemSelected.content === content) {
           findItem = false;
         }
-      })
-      if(findItem){
-        ItemsSelected.push({content,type});
+      });
+      if (findItem) {
+        ItemsSelected.push({ content, type });
         selectedItem.appendChild(buttonFactory(content, type));
-        menuFilter(ItemsSelected)
+        buildRecipesDom(menuFilter(ItemsSelected));
       }
     }
   }
+}
+
+export function deleteItem(item) {
+  let childrens = selectedItem.children;
+
+  for (var i = 0; i < childrens.length; i++) {
+     let childrenContent = childrens[i].innerText
+    if (childrenContent === item) {
+      selectedItem.removeChild(childrens[i]);
+      let el = ItemsSelected.indexOf(childrenContent)
+      ItemsSelected.splice(el, 1)
+    }
+  }
+  buildRecipesDom(menuFilter(ItemsSelected, true));
 }
 
 ingredientList();

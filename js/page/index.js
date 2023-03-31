@@ -15,12 +15,11 @@ let recipesList = [];
 
 let refresh = false;
 
-function buidRecipesDom(recipesDom) {
+export function buildRecipesDom(recipesDom) {
   let div = document.createElement("div");
   div.classList.add("card-container");
   if (recipesDom) {
-    //console.log("🚀 ~ file: index.js:169 ~ selectedItems.forEach ~ cardContainer:", cardContainer.children[0])
-    cardContainer.innerHTML = '';
+    cardContainer.innerHTML = "";
 
     recipesDom.forEach((recipe) => {
       div.appendChild(recipesFactory(recipe));
@@ -82,37 +81,38 @@ function filter(research) {
       });
     });
     refresh = true;
-    buidRecipesDom(recipesList);
+    buildRecipesDom(recipesList);
     return;
   }
   if (refresh && searchBar.value.length < 3) {
     cardContainer.removeChild(cardContainer.children[0]);
-    buidRecipesDom();
+    buildRecipesDom();
     refresh = false;
   }
 }
 
-export function menuFilter(selectedItems) {
+export function menuFilter(selectedItems, deleteItems) {
   let recipesListFilter = [];
+  deleteItems ? (recipesList = []) : null;
+  let NotfindRecipe = false;
 
-  selectedItems.forEach((item) => {
+  selectedItems.forEach(function callback(item, index) {
     let { content, type } = item;
-    type = type.split("-");
-    type = type[0];
+
     content = content.toLowerCase();
     let recipesFilter = [];
 
     recipesList.length === 0 ? (recipesFilter = recipes) : (recipesFilter = recipesList);
-    console.log("🚀 ~ file: index.js:106 ~ selectedItems.forEach ~ recipesList:", recipesList)
 
     recipesFilter.forEach((recipe) => {
       let findRecipe = false;
 
       if (type === "appliance") {
-        //debugger
         if (recipe[type].toLowerCase().includes(content)) {
-          if (selectedItems.length > 1  && recipe[type].toLowerCase() === content && selectedItems[selectedItems.length - 1].type === "appliance-choice") {
+          
+          if (index > 0 && recipe[type].toLowerCase() === content && selectedItems[index].type === "appliance") {
             recipesListFilter.push(recipe);
+            NotfindRecipe = true;
           } else {
             if (recipesList.length === 0) {
               recipesList.push(recipe);
@@ -125,13 +125,11 @@ export function menuFilter(selectedItems) {
           }
         }
       } else if (type === "ingredient") {
-        //debugger
         recipe.ingredients.forEach((ingredient) => {
           if (ingredient.ingredient.toLowerCase().includes(content)) {
-            console.log(selectedItems.length > 1 && ingredient.ingredient.toLowerCase() === content && selectedItems[selectedItems.length - 1].type === "ingredient");
-            if (selectedItems.length > 1 && ingredient.ingredient.toLowerCase() === content && selectedItems[selectedItems.length - 1].type === "ingredient-choice") {
-              //debugger
+            if (index > 0 && ingredient.ingredient.toLowerCase() === content && selectedItems[selectedItems.length - 1].type === "ingredient") {
               recipesListFilter.push(recipe);
+              NotfindRecipe = true;
             } else {
               if (recipesList.length === 0) {
                 recipesList.push(recipe);
@@ -147,8 +145,9 @@ export function menuFilter(selectedItems) {
       } else {
         recipe.ustensils.forEach((ustensil) => {
           if (ustensil.toLowerCase().includes(content)) {
-            if (selectedItems.length > 1 && ustensil.toLowerCase() === content && selectedItems[selectedItems.length - 1].type === "ustensil-choice") {
+            if (index > 0 && ustensil.toLowerCase() === content && selectedItems[selectedItems.length - 1].type === "ustensil") {
               recipesListFilter.push(recipe);
+              NotfindRecipe = true;
             } else {
               if (recipesList.length === 0) {
                 recipesList.push(recipe);
@@ -164,14 +163,13 @@ export function menuFilter(selectedItems) {
       }
     });
   });
-  if (recipesListFilter.length > 0) {
-    recipesList = recipesListFilter
-    console.log("🚀 ~ file: index.js:169 ~ menuFilter ~ recipesList:", recipesList)
-    //console.log("🚀 ~ file: index.js:169 ~ selectedItems.forEach ~ cardContainer:", document.querySelector(".card-container"))
-    cardContainer.innerHTML = '';
+  recipesListFilter.length > 0 ? (recipesList = recipesListFilter) : null;
+  selectedItems.length === 0 ? (recipesList = recipes) : null;
+  if (selectedItems.length > 1 && NotfindRecipe === false){
+    recipesList = []
   }
-  buidRecipesDom(recipesList);
+  return recipesList;
 }
 
-buidRecipesDom();
+buildRecipesDom();
 filter();

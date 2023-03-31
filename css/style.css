@@ -149,6 +149,11 @@ input.dropdown-list-input.form-control::placeholder {
     padding-left: 12px;
 }
 
+.dropdown-list li  a{
+    color: white;
+    text-decoration: none;
+}
+
 .dropdown-list ul {
     margin: 0;
     padding: 0;
@@ -224,4 +229,19 @@ i.fa.fa-search {
     -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+
+.button-icon {
+    align-items: center;
+    background-color: transparent;
+    border: none;
+}
+
+button i {
+    color: white;
+}
+
+span.button.btn-ingredient {
+    display: flex;
+    justify-content: center;
 }
