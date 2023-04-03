@@ -105,12 +105,13 @@ export function menuFilter(selectedItems, deleteItems) {
     recipesList.length === 0 ? (recipesFilter = recipes) : (recipesFilter = recipesList);
 
     recipesFilter.forEach((recipe) => {
+      //debugger
       let findRecipe = false;
 
       if (type === "appliance") {
         if (recipe[type].toLowerCase().includes(content)) {
           
-          if (index > 0 && recipe[type].toLowerCase() === content && selectedItems[index].type === "appliance") {
+          if (index > 0 && recipe[type].toLowerCase() === content && selectedItems[selectedItems.length - 1].type === "appliance") {
             recipesListFilter.push(recipe);
             NotfindRecipe = true;
           } else {
@@ -164,7 +165,10 @@ export function menuFilter(selectedItems, deleteItems) {
     });
   });
   recipesListFilter.length > 0 ? (recipesList = recipesListFilter) : null;
-  selectedItems.length === 0 ? (recipesList = recipes) : null;
+  if(selectedItems.length === 0) {
+    recipesList = []
+    return recipes
+  };
   if (selectedItems.length > 1 && NotfindRecipe === false){
     recipesList = []
   }

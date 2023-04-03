@@ -23,6 +23,16 @@ const btnContainer = document.querySelector(".button-container");
 
 const selectedItem = document.querySelector(".selected-item");
 
+const menuInputs = Array.from(document.querySelectorAll(".dropdown-list-input"));
+
+let ModifiedMenu = false;
+
+menuInputs.forEach((menuInput) => {
+  menuInput.addEventListener("keyup", (e) => {
+    searchMenu(e);
+  });
+});
+
 btnIngredient.addEventListener("click", hide);
 ListIngredientHide.addEventListener("click", hideList);
 let ItemsSelected = [];
@@ -99,23 +109,23 @@ function close(e) {
 
 function ingredientList() {
   let listsElement = menuList("ingredient");
-  listsElement.forEach((listElement)=>{
+  listsElement.forEach((listElement) => {
     ingredientChoice.appendChild(listElement);
-  })
+  });
 }
 
 function applianceList() {
   let listsElement = menuList("appliance");
-  listsElement.forEach((listElement)=>{
+  listsElement.forEach((listElement) => {
     applianceChoice.appendChild(listElement);
-  })
+  });
 }
 
 function ustensilList() {
   let listsElement = menuList("ustensil");
-  listsElement.forEach((listElement)=>{
+  listsElement.forEach((listElement) => {
     ustensilChoice.appendChild(listElement);
-  })
+  });
 }
 
 function closeAllLists() {
@@ -155,14 +165,67 @@ export function deleteItem(item) {
   let childrens = selectedItem.children;
 
   for (var i = 0; i < childrens.length; i++) {
-     let childrenContent = childrens[i].innerText
+    let childrenContent = childrens[i].innerText;
     if (childrenContent === item) {
       selectedItem.removeChild(childrens[i]);
-      let el = ItemsSelected.indexOf(childrenContent)
-      ItemsSelected.splice(el, 1)
+      let el = ItemsSelected.indexOf(childrenContent);
+      ItemsSelected.splice(el, 1);
     }
   }
   buildRecipesDom(menuFilter(ItemsSelected, true));
+}
+
+function searchMenu(e) {
+  let type = e.target.parentElement.parentElement.parentElement.getAttribute("id");
+  let content = e.target.value;
+  type = type.split("-");
+  type = type[0];
+  let list = [];
+  let nodeList = [];
+  let filteredList = [];
+  if (content.length >= 3) {
+    if (type === "ingredient") {
+      list = getIngredients();
+      list.forEach((item) => {
+        item.toLowerCase().includes(content) ? filteredList.push(item) : "";
+      });
+      populateLists(ingredientChoice, filteredList);
+      ModifiedMenu = true;
+    } else if (type === "appliance") {
+      list = getAppliances();
+      list.forEach((item) => {
+        item.toLowerCase().includes(content) ? filteredList.push(item) : "";
+      });
+      populateLists(applianceChoice, filteredList);
+      ModifiedMenu = true;
+    } else if (type === "ustensil") {
+      list = getUstensils();
+      list.forEach((item) => {
+        item.toLowerCase().includes(content) ? filteredList.push(item) : "";
+      });
+      populateLists(ustensilChoice, filteredList);
+      ModifiedMenu = true;
+    }
+  }
+
+  if (ModifiedMenu === true && content.length < 3) {
+    if (type === "ingredient") {
+      populateLists(ingredientChoice, getIngredients())
+    } else if (type === "appliance") {
+      populateLists(applianceChoice, getAppliances())
+    } else if (type === "ustensil") {
+      populateLists(ustensilChoice, getUstensils())
+    }
+    ModifiedMenu = false;
+  }
+}
+
+function populateLists(DOMelement, list) {
+  DOMelement.innerHTML = "";
+  let nodeList = menuList(list);
+  nodeList.forEach((node) => {
+    DOMelement.appendChild(node);
+  });
 }
 
 ingredientList();

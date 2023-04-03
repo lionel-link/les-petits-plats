@@ -1,17 +1,19 @@
 import { getIngredients, getAppliances, getUstensils } from "../../data/recipesData.js";
 
-export function menuList (type) {
-    let typeList = [];
-
-    if(type === 'ingredient'){
-        typeList = getIngredients()
+export function menuList (typeList) {
+    let list = [];
+    if (Array.isArray(typeList)){
+        list = typeList;
+    }else {
+        if(typeList === 'ingredient'){
+            list = getIngredients()
+        }
+        else if(typeList === 'appliance'){
+            list = getAppliances()
+        } else if(typeList === 'ustensil'){
+            list = getUstensils()
+        }
     }
-    else if(type === 'appliance'){
-        typeList = getAppliances()
-    } else if(type === 'ustensil'){
-        typeList = getUstensils()
-    }
-    typeList.sort();
     let div1 = document.createElement("div");
     let div2 = document.createElement("div");
     let div3 = document.createElement("div");
@@ -28,7 +30,7 @@ export function menuList (type) {
     
     let i = -1;
   
-    typeList.forEach((item) => {
+    list.forEach((item) => {
       i++
       i === 3 ? i=0 : "";
         ulTab[i].innerHTML += `<li><a href="#" data-value="${item}">${item}<a></li>`;

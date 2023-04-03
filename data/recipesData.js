@@ -1789,6 +1789,7 @@ export function getIngredients() {
       }
     });
   });
+  ingredientList.sort();
   return ingredientList;
 }
 
@@ -1799,6 +1800,7 @@ export function getAppliances() {
       applianceList.push(recipe.appliance);
     }
   });
+  applianceList.sort()
   return applianceList;
 }
 
@@ -1811,5 +1813,6 @@ export function getUstensils() {
         }
       });
     });
+    ustensilList.sort()
     return ustensilList;
 }
