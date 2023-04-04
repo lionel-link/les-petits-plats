@@ -228,6 +228,53 @@ function populateLists(DOMelement, list) {
   });
 }
 
+export function updateList(list){
+  let ingredientList = [];
+  let applianceList = [];
+  let ustensilList = [];
+  list.forEach((recipe) => {
+    recipe.ingredients.forEach((ingredient) => {
+      if (!ingredientList.find((ing) => ing === ingredient.ingredient)) {
+        ingredientList.push(ingredient.ingredient);
+      }
+    });
+  });
+  ingredientList.sort();
+  populateLists(ingredientChoice, ingredientList)
+
+  list.forEach((recipe) => {
+    if (!applianceList.find((appliance) => appliance === recipe.appliance)) {
+      applianceList.push(recipe.appliance);
+    }
+  });
+  applianceList.sort()
+  populateLists(applianceChoice, applianceList)
+
+  list.forEach((recipe) => {
+    recipe.ustensils.forEach((ustensil) => {
+      if (!ustensilList.find((el) => el === ustensil)) {
+          ustensilList.push(ustensil);
+      }
+    });
+  });
+  ustensilList.sort()
+  populateLists(ustensilChoice, ustensilList)
+
+}
+
+// function sorter (list, key) {
+//   let sortedList = [];
+//   list.forEach((recipe) => {
+//     recipe.ingredients.forEach((ingredient) => {
+//       if (!ingredientList.find((ing) => ing === ingredient.ingredient)) {
+//         sortedList.push(ingredient.ingredient);
+//       }
+//     });
+//   });
+//   sortedList.sort();
+//   return sortedList;
+// }
+
 ingredientList();
 ustensilList();
 applianceList();

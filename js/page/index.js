@@ -1,5 +1,6 @@
 import { getAppliances, getIngredients, getRecipes, getUstensils } from "../../data/recipesData.js";
 import { recipesFactory } from "../factories/recipesFactories.js";
+import { updateList } from "../utils/menu.js";
 
 const cardContainer = document.getElementById("card-container");
 const searchBar = document.getElementById("main-search-input");
@@ -11,7 +12,9 @@ const recipes = getRecipes();
 const ingredients = getIngredients();
 const appliances = getAppliances();
 const ustensils = getUstensils();
-let recipesList = [];
+let recipesListInput = [];
+let recipesListMenu = [];
+let selectedItems = [];
 
 let refresh = false;
 
@@ -46,63 +49,73 @@ function filter(research) {
       let findRecipe = false;
 
       if (recipe.name.toLowerCase().includes(research)) {
-        if (recipesList.length === 0) {
-          recipesList.push(recipe);
+        if (recipesListInput.length === 0) {
+          recipesListInput.push(recipe);
         } else {
-          recipesList.forEach((recipeList) => {
+          recipesListInput.forEach((recipeList) => {
             recipeList.id === recipe.id ? (findRecipe = true) : null;
           });
-          findRecipe ? "" : recipesList.push(recipe);
+          findRecipe ? "" : recipesListInput.push(recipe);
         }
       }
 
       if (recipe.description.toLowerCase().includes(research)) {
-        if (recipesList.length === 0) {
-          recipesList.push(recipe);
+        if (recipesListInput.length === 0) {
+          recipesListInput.push(recipe);
         } else {
-          recipesList.forEach((recipeList) => {
+          recipesListInput.forEach((recipeList) => {
             recipeList.id === recipe.id ? (findRecipe = true) : null;
           });
-          findRecipe ? "" : recipesList.push(recipe);
+          findRecipe ? "" : recipesListInput.push(recipe);
         }
       }
 
       recipe.ingredients.forEach((ingredient) => {
         if (ingredient.ingredient.toLowerCase().includes(research)) {
-          if (recipesList.length === 0) {
-            recipesList.push(recipe);
+          if (recipesListInput.length === 0) {
+            recipesListInput.push(recipe);
           } else {
-            recipesList.forEach((recipeList) => {
+            recipesListInput.forEach((recipeList) => {
               recipeList.id === recipe.id ? (findRecipe = true) : null;
             });
-            findRecipe ? "" : recipesList.push(recipe);
+            findRecipe ? "" : recipesListInput.push(recipe);
           }
         }
       });
     });
     refresh = true;
-    buildRecipesDom(recipesList);
+    buildRecipesDom(recipesListInput);
+    updateList(recipesListInput)
     return;
   }
   if (refresh && searchBar.value.length < 3) {
     cardContainer.removeChild(cardContainer.children[0]);
-    buildRecipesDom();
     refresh = false;
+    recipesListInput = [];
+    updateList(recipes)
   }
+  buildRecipesDom(menuFilter(selectedItems, true));
 }
 
-export function menuFilter(selectedItems, deleteItems) {
-  let recipesListFilter = [];
-  deleteItems ? (recipesList = []) : null;
+export function menuFilter(newSelectedItems, deleteItems) {
+  //debugger
+  let recipesFilter = [];
+  newSelectedItems ? (selectedItems = newSelectedItems) : null;
+
+  let recipesListMenuFilter = [];
+  deleteItems ? (recipesListMenu = []) : null;
   let NotfindRecipe = false;
 
   selectedItems.forEach(function callback(item, index) {
     let { content, type } = item;
 
     content = content.toLowerCase();
-    let recipesFilter = [];
 
-    recipesList.length === 0 ? (recipesFilter = recipes) : (recipesFilter = recipesList);
+    if (recipesListInput.length > 0) {
+      recipesFilter = recipesListInput;
+    } else {
+      recipesListMenu.length === 0 ? (recipesFilter = recipes) : (recipesFilter = recipesListMenu);
+    }
 
     recipesFilter.forEach((recipe) => {
       //debugger
@@ -110,18 +123,17 @@ export function menuFilter(selectedItems, deleteItems) {
 
       if (type === "appliance") {
         if (recipe[type].toLowerCase().includes(content)) {
-          
           if (index > 0 && recipe[type].toLowerCase() === content && selectedItems[selectedItems.length - 1].type === "appliance") {
-            recipesListFilter.push(recipe);
+            recipesListMenuFilter.push(recipe);
             NotfindRecipe = true;
           } else {
-            if (recipesList.length === 0) {
-              recipesList.push(recipe);
+            if (recipesListMenu.length === 0) {
+              recipesListMenu.push(recipe);
             } else {
-              recipesList.forEach((recipeList) => {
+              recipesListMenu.forEach((recipeList) => {
                 recipeList.id === recipe.id ? (findRecipe = true) : null;
               });
-              findRecipe ? "" : recipesList.push(recipe);
+              findRecipe ? "" : recipesListMenu.push(recipe);
             }
           }
         }
@@ -129,16 +141,16 @@ export function menuFilter(selectedItems, deleteItems) {
         recipe.ingredients.forEach((ingredient) => {
           if (ingredient.ingredient.toLowerCase().includes(content)) {
             if (index > 0 && ingredient.ingredient.toLowerCase() === content && selectedItems[selectedItems.length - 1].type === "ingredient") {
-              recipesListFilter.push(recipe);
+              recipesListMenuFilter.push(recipe);
               NotfindRecipe = true;
             } else {
-              if (recipesList.length === 0) {
-                recipesList.push(recipe);
+              if (recipesListMenu.length === 0) {
+                recipesListMenu.push(recipe);
               } else {
-                recipesList.forEach((recipeList) => {
+                recipesListMenu.forEach((recipeList) => {
                   recipeList.id === recipe.id ? (findRecipe = true) : null;
                 });
-                findRecipe ? "" : recipesList.push(recipe);
+                findRecipe ? "" : recipesListMenu.push(recipe);
               }
             }
           }
@@ -147,16 +159,16 @@ export function menuFilter(selectedItems, deleteItems) {
         recipe.ustensils.forEach((ustensil) => {
           if (ustensil.toLowerCase().includes(content)) {
             if (index > 0 && ustensil.toLowerCase() === content && selectedItems[selectedItems.length - 1].type === "ustensil") {
-              recipesListFilter.push(recipe);
+              recipesListMenuFilter.push(recipe);
               NotfindRecipe = true;
             } else {
-              if (recipesList.length === 0) {
-                recipesList.push(recipe);
+              if (recipesListMenu.length === 0) {
+                recipesListMenu.push(recipe);
               } else {
-                recipesList.forEach((recipeList) => {
+                recipesListMenu.forEach((recipeList) => {
                   recipeList.id === recipe.id ? (findRecipe = true) : null;
                 });
-                findRecipe ? "" : recipesList.push(recipe);
+                findRecipe ? "" : recipesListMenu.push(recipe);
               }
             }
           }
@@ -164,15 +176,15 @@ export function menuFilter(selectedItems, deleteItems) {
       }
     });
   });
-  recipesListFilter.length > 0 ? (recipesList = recipesListFilter) : null;
-  if(selectedItems.length === 0) {
-    recipesList = []
-    return recipes
-  };
-  if (selectedItems.length > 1 && NotfindRecipe === false){
-    recipesList = []
+  recipesListMenuFilter.length > 0 ? (recipesListMenu = recipesListMenuFilter) : null;
+  if (selectedItems.length === 0) {
+    recipesListMenu = [];
+    return recipes;
   }
-  return recipesList;
+  if (selectedItems.length > 1 && NotfindRecipe === false) {
+    recipesListMenu = [];
+  }
+  return recipesListMenu;
 }
 
 buildRecipesDom();

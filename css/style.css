@@ -23,6 +23,9 @@ body {
 .search-input {
     background-color: #E7E7E7;
     border-radius: 0;
+    height: 69px;
+    display: flex;
+    align-items: center;
 }
 
 .button {
@@ -31,6 +34,7 @@ body {
     border-radius: 5px;
     margin: 15px 15px 15px 0;
     width: 170px;
+    height: 69px;
 }
 
 button.btn:hover {
@@ -115,6 +119,10 @@ div#ustensil-choice {
     margin-bottom: 10px;
 }
 
+.input-group {
+    align-items: center;
+}
+
 .appliance-dropdown {
     background-color: #68D9A4;
 }
@@ -170,11 +178,14 @@ i.fa.fa-search {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    margin-top: 30px;
+    margin-left: 0px;
 }
 
 .card {
     width: 380px;
-    margin: 15px;
+    margin: 15px 15px 15px 0;
+    background-color: #E7E7E7;
 }
 
 .card-recette {
@@ -188,15 +199,17 @@ i.fa.fa-search {
     overflow: hidden;
 }
 
-.card-left,
-.card-right {
+.card-top,
+.card-bottom {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .card-text {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    padding: 10px;
 }
 
 .card-text>* {
@@ -209,7 +222,6 @@ i.fa.fa-search {
     align-items: end;
 }
 
-.card-title,
 .card-duration {
     font-weight: 700;
 }
@@ -230,6 +242,12 @@ i.fa.fa-search {
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+.card-title {
+    width: 235px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
 .button-icon {
     align-items: center;
@@ -244,4 +262,9 @@ button i {
 span.button.btn-ingredient {
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+
+.row.selected-item {
+    margin: 15px 0 0 0px;
 }

@@ -36,36 +36,35 @@ export function recipesFactory(recipe) {
   divCardtext.classList.add("card-text");
 
   let div2 = document.createElement("div");
-  div2.classList.add("card-left");
+  div2.classList.add("card-top");
   divCardtext.appendChild(div2);
 
   let div3 = document.createElement("div");
-  div3.classList.add("card-recette");
+  div3.classList.add("card-duration");
   let div4 = document.createElement("div");
   div4.classList.add("card-title");
-  div4.innerHTML = recipe.name+'/'+recipe.appliance;
+  div4.innerHTML = recipe.name/*+'/'+recipe.appliance*/;
   div2.appendChild(div4);
   div2.appendChild(div3)
 
   let div5 = document.createElement("div");
-  div5.classList.add("card-recette");
-  recipe.ingredients.forEach((ingredient) => {
-    let span = document.createElement('span')
-    span.innerHTML = ` <strong>${ingredient.ingredient}:</strong>  ${ingredient.quantity} ${ingredient.unit ? ingredient.unit : ''}`
-    /** afficher liste ustensil */ 
-    div5.appendChild(span)
-    let div115 = document.createElement("div");
-    div115.innerHTML = recipe.ustensils
-    div5.appendChild(div115)
-  });
+  div5.innerHTML =  ` <strong><i class="fa-regular fa-clock"></i>  ${recipe.time} min</strong>`
   div3.appendChild(div5);
 
   let div6 = document.createElement("div");
-  div6.classList.add("card-right");
+  div6.classList.add("card-bottom");
 
   let div7 = document.createElement("div");
-  div7.classList.add("card-duration");
-  div7.innerHTML =  ` <strong><i class="fa-regular fa-clock"></i>  ${recipe.time} </strong>`
+  div7.classList.add("card-recette");
+   recipe.ingredients.forEach((ingredient) => {
+    let span = document.createElement('span')
+    span.innerHTML = ` <strong>${ingredient.ingredient}:</strong>  ${ingredient.quantity} ${ingredient.unit ? ingredient.unit : ''}`
+    div7.appendChild(span)
+  //   /** afficher liste ustensil */ 
+  //   // let div115 = document.createElement("div");
+  //   // div115.innerHTML = recipe.ustensils
+    // div5.appendChild(div115)
+  });
 
   let div8 = document.createElement("div");
   div8.classList.add("card-description");
@@ -77,3 +76,16 @@ export function recipesFactory(recipe) {
 
   return div
 }
+
+
+  // let div5 = document.createElement("div");
+  // div5.classList.add("card-recette");
+  // recipe.ingredients.forEach((ingredient) => {
+  //   let span = document.createElement('span')
+  //   span.innerHTML = ` <strong>${ingredient.ingredient}:</strong>  ${ingredient.quantity} ${ingredient.unit ? ingredient.unit : ''}`
+  //   /** afficher liste ustensil */ 
+  //   div5.appendChild(span)
+  //   // let div115 = document.createElement("div");
+  //   // div115.innerHTML = recipe.ustensils
+  //   // div5.appendChild(div115)
+  // });
