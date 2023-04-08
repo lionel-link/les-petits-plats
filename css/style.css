@@ -256,6 +256,7 @@ i.fa.fa-search {
 }
 
 button i {
+    padding-left: 5px;
     color: white;
 }
 
@@ -267,4 +268,10 @@ span.button.btn-ingredient {
 
 .row.selected-item {
     margin: 15px 0 0 0px;
+}
+
+span.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

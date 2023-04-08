@@ -1,106 +1,106 @@
-import { getIngredients, getAppliances, getUstensils } from "../../data/recipesData.js";
-import { buttonFactory } from "../../js/factories/buttonFactories.js";
-import { menuList } from "../../js/factories/menuListFactories.js";
-import { menuFilter, buildRecipesDom } from "../../js/page/index.js";
+import { getIngredients, getAppliances, getUstensils, getRecipes } from '../../data/recipesData.js';
+import { buttonFactory } from '../../js/factories/buttonFactories.js';
+import { menuList } from '../../js/factories/menuListFactories.js';
+import { menuFilter, buildRecipesDom } from '../../js/page/index.js';
 
-const btnIngredient = document.getElementById("btn-ingredient");
-const ListIngredient = document.getElementById("ingredient-list");
-const ListIngredientHide = document.getElementById("ingredient-list-hide");
+const btnIngredient = document.getElementById('btn-ingredient');
+const ListIngredient = document.getElementById('ingredient-list');
+const ListIngredientHide = document.getElementById('ingredient-list-hide');
 
-const btnAppliance = document.getElementById("btn-appliance");
-const ListAppliance = document.getElementById("appliance-list");
-const ListApplianceHide = document.getElementById("appliance-list-hide");
+const btnAppliance = document.getElementById('btn-appliance');
+const ListAppliance = document.getElementById('appliance-list');
+const ListApplianceHide = document.getElementById('appliance-list-hide');
 
-const btnUstensil = document.getElementById("btn-ustensil");
-const ListUstensil = document.getElementById("ustensil-list");
-const ListUstensilHide = document.getElementById("ustensil-list-hide");
+const btnUstensil = document.getElementById('btn-ustensil');
+const ListUstensil = document.getElementById('ustensil-list');
+const ListUstensilHide = document.getElementById('ustensil-list-hide');
 
-const ingredientChoice = document.getElementById("ingredient-choice");
-const applianceChoice = document.getElementById("appliance-choice");
-const ustensilChoice = document.getElementById("ustensil-choice");
+const ingredientChoice = document.getElementById('ingredient-choice');
+const applianceChoice = document.getElementById('appliance-choice');
+const ustensilChoice = document.getElementById('ustensil-choice');
 
-const btnContainer = document.querySelector(".button-container");
+const btnContainer = document.querySelector('.button-container');
 
-const selectedItem = document.querySelector(".selected-item");
+const selectedItem = document.querySelector('.selected-item');
 
-const menuInputs = Array.from(document.querySelectorAll(".dropdown-list-input"));
+const menuInputs = Array.from(document.querySelectorAll('.dropdown-list-input'));
 
 let ModifiedMenu = false;
 
 menuInputs.forEach((menuInput) => {
-  menuInput.addEventListener("keyup", (e) => {
+  menuInput.addEventListener('keyup', (e) => {
     searchMenu(e);
   });
 });
 
-btnIngredient.addEventListener("click", hide);
-ListIngredientHide.addEventListener("click", hideList);
-let ItemsSelected = [];
+btnIngredient.addEventListener('click', hide);
+ListIngredientHide.addEventListener('click', hideList);
+let itemsSelected = [];
 
 function hide() {
-  btnIngredient.classList.add("d-none");
-  ListIngredient.style.display = "block";
+  btnIngredient.classList.add('d-none');
+  ListIngredient.style.display = 'block';
   hideListAppliance();
   hideListUstensil();
 }
 
 function hideList() {
-  btnIngredient.classList.remove("d-none");
-  ListIngredient.style.display = "none";
+  btnIngredient.classList.remove('d-none');
+  ListIngredient.style.display = 'none';
 }
 
-btnAppliance.addEventListener("click", hideAppliance);
-ListApplianceHide.addEventListener("click", hideListAppliance);
-document.addEventListener("click", hideListMenu);
+btnAppliance.addEventListener('click', hideAppliance);
+ListApplianceHide.addEventListener('click', hideListAppliance);
+document.addEventListener('click', hideListMenu);
 
 function hideListMenu() {
-  if (ListIngredient.style.display === "block" || ListAppliance.style.display === "block" || ListUstensil.style.display === "block") {
-    document.addEventListener("click", (e) => {
-      btnContainer.contains(e.target) ? "" : closeAllLists();
+  if (ListIngredient.style.display === 'block' || ListAppliance.style.display === 'block' || ListUstensil.style.display === 'block') {
+    document.addEventListener('click', (e) => {
+      btnContainer.contains(e.target) ? '' : closeAllLists();
     });
   }
 }
 
 function hideAppliance() {
-  btnAppliance.classList.add("d-none");
-  ListAppliance.style.display = "block";
+  btnAppliance.classList.add('d-none');
+  ListAppliance.style.display = 'block';
   hideList();
   hideListUstensil();
 }
 
 function hideListAppliance() {
-  btnAppliance.classList.remove("d-none");
-  ListAppliance.style.display = "none";
+  btnAppliance.classList.remove('d-none');
+  ListAppliance.style.display = 'none';
 }
 
-btnUstensil.addEventListener("click", hideUstensil);
-ListUstensilHide.addEventListener("click", hideListUstensil);
+btnUstensil.addEventListener('click', hideUstensil);
+ListUstensilHide.addEventListener('click', hideListUstensil);
 
-ListAppliance.addEventListener("click", (e) => {
+ListAppliance.addEventListener('click', (e) => {
   showItemdMenu(e);
 });
-ListIngredient.addEventListener("click", (e) => {
+ListIngredient.addEventListener('click', (e) => {
   showItemdMenu(e);
 });
-ListUstensil.addEventListener("click", (e) => {
+ListUstensil.addEventListener('click', (e) => {
   showItemdMenu(e);
 });
 
 function hideUstensil() {
-  btnUstensil.classList.add("d-none");
-  ListUstensil.style.display = "block";
+  btnUstensil.classList.add('d-none');
+  ListUstensil.style.display = 'block';
   hideList();
   hideListAppliance();
 }
 
 function hideListUstensil() {
-  btnUstensil.classList.remove("d-none");
-  ListUstensil.style.display = "none";
+  btnUstensil.classList.remove('d-none');
+  ListUstensil.style.display = 'none';
 }
 
-document.addEventListener("keyup", close);
+document.addEventListener('keyup', close);
 function close(e) {
-  if (e.key == "Escape") {
+  if (e.key == 'Escape') {
     hideList();
     hideListAppliance();
     hideListUstensil();
@@ -108,21 +108,21 @@ function close(e) {
 }
 
 function ingredientList() {
-  let listsElement = menuList("ingredient");
+  let listsElement = menuList('ingredient');
   listsElement.forEach((listElement) => {
     ingredientChoice.appendChild(listElement);
   });
 }
 
 function applianceList() {
-  let listsElement = menuList("appliance");
+  let listsElement = menuList('appliance');
   listsElement.forEach((listElement) => {
     applianceChoice.appendChild(listElement);
   });
 }
 
 function ustensilList() {
-  let listsElement = menuList("ustensil");
+  let listsElement = menuList('ustensil');
   listsElement.forEach((listElement) => {
     ustensilChoice.appendChild(listElement);
   });
@@ -136,72 +136,94 @@ function closeAllLists() {
 
 function showItemdMenu(item) {
   let findItem = true;
-  if (item.target.nodeName === "A") {
-    let type = item.target.parentElement.parentElement.parentElement.parentElement.getAttribute("id");
-    type = type.split("-");
+  if (item.target.nodeName === 'A') {
+    let type = item.target.parentElement.parentElement.parentElement.parentElement.getAttribute('id');
+    type = type.split('-');
     type = type[0];
     let content = item.target.innerText;
 
-    if (ItemsSelected.length === 0) {
-      ItemsSelected.push({ content, type });
-      selectedItem.appendChild(buttonFactory(content, type));
-      buildRecipesDom(menuFilter(ItemsSelected));
+    if (itemsSelected.length === 0) {
+      showItemdMenuHelper(content, type);
     } else {
-      ItemsSelected.forEach((ItemSelected) => {
+      itemsSelected.forEach((ItemSelected) => {
         if (ItemSelected.content === content) {
           findItem = false;
         }
       });
       if (findItem) {
-        ItemsSelected.push({ content, type });
-        selectedItem.appendChild(buttonFactory(content, type));
-        buildRecipesDom(menuFilter(ItemsSelected));
+        showItemdMenuHelper(content, type);
       }
     }
   }
 }
 
-export function deleteItem(item) {
-  let childrens = selectedItem.children;
+function showItemdMenuHelper(content, type) {
+  itemsSelected.push({ content, type });
+  selectedItem.appendChild(buttonFactory(content, type));
+  let newRecipesList = menuFilter(itemsSelected, false);
+  buildRecipesDom(newRecipesList);
+  updateList(newRecipesList);
+}
 
-  for (var i = 0; i < childrens.length; i++) {
-    let childrenContent = childrens[i].innerText;
-    if (childrenContent === item) {
-      selectedItem.removeChild(childrens[i]);
-      let el = ItemsSelected.indexOf(childrenContent);
-      ItemsSelected.splice(el, 1);
+export function deleteItem(item) {
+  if (item === 'all') {
+    selectedItem.innerHTML = '';
+    itemsSelected = []
+  } else {
+    let childrens = selectedItem.children;
+
+    for (var i = 0; i < childrens.length; i++) {
+      let childrenContent = childrens[i].innerText;
+      if (childrenContent === item) {
+        selectedItem.removeChild(childrens[i]);
+        let el = itemsSelected.indexOf(childrenContent);
+        itemsSelected.splice(el, 1);
+      }
+    }
+    if (itemsSelected.length === 0) {
+      let newRecipesList = menuFilter(itemsSelected, true);
+      if (newRecipesList.length > 0) {
+        buildRecipesDom(newRecipesList);
+        updateList(newRecipesList);
+      } else {
+        buildRecipesDom();
+        updateList(getRecipes());
+      }
+    } else {
+      let newRecipesList = menuFilter(itemsSelected, true);
+      buildRecipesDom(newRecipesList);
+      updateList(newRecipesList);
     }
   }
-  buildRecipesDom(menuFilter(ItemsSelected, true));
 }
 
 function searchMenu(e) {
-  let type = e.target.parentElement.parentElement.parentElement.getAttribute("id");
+  let type = e.target.parentElement.parentElement.parentElement.getAttribute('id');
   let content = e.target.value;
-  type = type.split("-");
+  type = type.split('-');
   type = type[0];
   let list = [];
   let nodeList = [];
   let filteredList = [];
   if (content.length >= 3) {
-    if (type === "ingredient") {
+    if (type === 'ingredient') {
       list = getIngredients();
       list.forEach((item) => {
-        item.toLowerCase().includes(content) ? filteredList.push(item) : "";
+        item.toLowerCase().includes(content) ? filteredList.push(item) : '';
       });
       populateLists(ingredientChoice, filteredList);
       ModifiedMenu = true;
-    } else if (type === "appliance") {
+    } else if (type === 'appliance') {
       list = getAppliances();
       list.forEach((item) => {
-        item.toLowerCase().includes(content) ? filteredList.push(item) : "";
+        item.toLowerCase().includes(content) ? filteredList.push(item) : '';
       });
       populateLists(applianceChoice, filteredList);
       ModifiedMenu = true;
-    } else if (type === "ustensil") {
+    } else if (type === 'ustensil') {
       list = getUstensils();
       list.forEach((item) => {
-        item.toLowerCase().includes(content) ? filteredList.push(item) : "";
+        item.toLowerCase().includes(content) ? filteredList.push(item) : '';
       });
       populateLists(ustensilChoice, filteredList);
       ModifiedMenu = true;
@@ -209,26 +231,26 @@ function searchMenu(e) {
   }
 
   if (ModifiedMenu === true && content.length < 3) {
-    if (type === "ingredient") {
-      populateLists(ingredientChoice, getIngredients())
-    } else if (type === "appliance") {
-      populateLists(applianceChoice, getAppliances())
-    } else if (type === "ustensil") {
-      populateLists(ustensilChoice, getUstensils())
+    if (type === 'ingredient') {
+      populateLists(ingredientChoice, getIngredients());
+    } else if (type === 'appliance') {
+      populateLists(applianceChoice, getAppliances());
+    } else if (type === 'ustensil') {
+      populateLists(ustensilChoice, getUstensils());
     }
     ModifiedMenu = false;
   }
 }
 
 function populateLists(DOMelement, list) {
-  DOMelement.innerHTML = "";
+  DOMelement.innerHTML = '';
   let nodeList = menuList(list);
   nodeList.forEach((node) => {
     DOMelement.appendChild(node);
   });
 }
 
-export function updateList(list){
+export function updateList(list) {
   let ingredientList = [];
   let applianceList = [];
   let ustensilList = [];
@@ -240,26 +262,25 @@ export function updateList(list){
     });
   });
   ingredientList.sort();
-  populateLists(ingredientChoice, ingredientList)
+  populateLists(ingredientChoice, ingredientList);
 
   list.forEach((recipe) => {
     if (!applianceList.find((appliance) => appliance === recipe.appliance)) {
       applianceList.push(recipe.appliance);
     }
   });
-  applianceList.sort()
-  populateLists(applianceChoice, applianceList)
+  applianceList.sort();
+  populateLists(applianceChoice, applianceList);
 
   list.forEach((recipe) => {
     recipe.ustensils.forEach((ustensil) => {
       if (!ustensilList.find((el) => el === ustensil)) {
-          ustensilList.push(ustensil);
+        ustensilList.push(ustensil);
       }
     });
   });
-  ustensilList.sort()
-  populateLists(ustensilChoice, ustensilList)
-
+  ustensilList.sort();
+  populateLists(ustensilChoice, ustensilList);
 }
 
 // function sorter (list, key) {
