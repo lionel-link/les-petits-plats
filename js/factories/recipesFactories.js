@@ -76,16 +76,3 @@ export function recipesFactory(recipe) {
 
   return div
 }
-
-
-  // let div5 = document.createElement("div");
-  // div5.classList.add("card-recette");
-  // recipe.ingredients.forEach((ingredient) => {
-  //   let span = document.createElement('span')
-  //   span.innerHTML = ` <strong>${ingredient.ingredient}:</strong>  ${ingredient.quantity} ${ingredient.unit ? ingredient.unit : ''}`
-  //   /** afficher liste ustensil */ 
-  //   div5.appendChild(span)
-  //   // let div115 = document.createElement("div");
-  //   // div115.innerHTML = recipe.ustensils
-  //   // div5.appendChild(div115)
-  // });

@@ -1,1 +1,0 @@
-import {getIngredients,} from "./../../data/recipesData.js"

@@ -129,7 +129,6 @@ export function menuFilter(newSelectedItems, deleteItems) {
     }
 
     recipesFilter.forEach((recipe) => {
-      let findRecipe = false;
       if (type === "appliance") {
         menuFilterHelper(recipe.appliance, recipe, type, content, selectedItems, index, recipesListMenuFilter, NotfindRecipe, recipesListMenu)
       } else if (type === "ingredient") {
@@ -147,7 +146,7 @@ export function menuFilter(newSelectedItems, deleteItems) {
   if(recipesListMenuFilter.length > 0) {
     recipesListMenu = recipesListMenuFilter
      return recipesListMenu 
-    };
+    }
   if (selectedItems.length === 0) {
     recipesListMenu = [];
     return recipes;

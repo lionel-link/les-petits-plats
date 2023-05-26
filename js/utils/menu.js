@@ -203,7 +203,6 @@ function searchMenu(e) {
   type = type.split('-');
   type = type[0];
   let list = [];
-  let nodeList = [];
   let filteredList = [];
   if (content.length >= 3) {
     if (type === 'ingredient') {
