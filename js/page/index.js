@@ -58,30 +58,35 @@ export function filter(research) {
   research ? (research = research.value.toLowerCase()) : "";
 
   if (length >= 3) {
-    recipes.forEach((recipe) => {
+    for (let i = 0; i < recipes.length; i++) {
       let findRecipe = false
 
-      if (recipe.name.toLowerCase().includes(research) || recipe.description.toLowerCase().includes(research)) {
-        if(recipesListInput.length === 0){
-          recipesListInput.push(recipe)
+
+      if (recipes[i].name.toLowerCase().includes(research) || recipes[i].description.toLowerCase().includes(research)) {
+        if (recipesListInput.length === 0) {
+          recipesListInput.push(recipes[i]);
         }else{
-          let result = recipesListInput.find(recipeList => recipeList.id === recipe.id)
-          result ? null : findRecipe = true
+          for (let j = 0; j < recipesListInput.length; j++) {
+            recipesListInput[j].id === recipes[i].id ?  findRecipe = true : null;
+          }
+          findRecipe ? '' : recipesListInput.push(recipes[i]);
         }
       }else {
-          recipe.ingredients.forEach((ingredient) => {
-            if (ingredient.ingredient.toLowerCase().includes(research)) {
-              if(recipesListInput.length === 0){
-                recipesListInput.push(recipe)
-              }else {
-                let result = recipesListInput.find(recipeList => recipeList.id === recipe.id)
-                result ? null : findRecipe = true
+        for (let k = 0; k < recipes[i].ingredients.length; k++) {
+          if (recipes[i].ingredients[k].ingredient.toLowerCase().includes(research)) {
+            if (recipesListInput.length === 0) {
+              recipesListInput.push(recipes[i]);
+            }else{
+              for (let j = 0; j < recipesListInput.length; j++) {
+                recipesListInput[j].id === recipes[i].id ?  findRecipe = true : null;
               }
+              findRecipe ? '' : recipesListInput.push(recipes[i]);
             }
-          });
+          }
+        }
       }
-      findRecipe === false ? "" : recipesListInput.push(recipe) ;
-    });
+      findRecipe === false ? "" : recipesListInput.push(recipes[i]) ;
+    }
     refresh = true;
     return recipesListInput;
   }
